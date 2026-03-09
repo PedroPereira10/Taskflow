@@ -1,0 +1,130 @@
+.horaires-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.horaires-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  width: 100%;
+  margin-top: 20px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.jour-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  min-height: 150px;
+}
+
+.jour-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid black;
+
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+}
+
+.jour-count {
+  background: black;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.horaire-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.horaire-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.employe-nom {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.horaire-temps {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: black;
+  font-size: 11px;
+}
+
+.vide {
+  font-size: 12px;
+  color: #bbb;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.horaire-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  input {
+    flex: 1;
+  }
+
+  span {
+    color: black;
+    font-weight: bold;
+  }
+}
+
+.btn-nouvel-horaire {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #151515;
+  color: #e7dddd;
+
+  &:hover {
+    background-color: #959191;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
