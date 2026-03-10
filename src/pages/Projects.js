@@ -67,6 +67,11 @@ const Projects = () => {
     projet.nom.toLowerCase().includes(recherche.toLowerCase()),
   );
 
+  const getColleurEquipe = (nomEquipe) => {
+    const equipe = equipes.find((e) => e.nom === nomEquipe);
+    return equipe?.cor || "#6366f1";
+  };
+
   return (
     <div className="page-layout">
       <Drawer />
@@ -92,7 +97,13 @@ const Projects = () => {
         </div>
 
         {projetsFiltrees.map((projet, index) => (
-          <div key={index} className="projet-card">
+          <div
+            key={index}
+            className="projet-card"
+            style={{
+              borderTop: `2px solid ${getColleurEquipe(projet.equipe)}`,
+            }}
+          >
             <div>
               <h2>{projet.nom}</h2>
               <p>{projet.description}</p>

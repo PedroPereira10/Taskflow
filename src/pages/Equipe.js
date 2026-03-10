@@ -19,6 +19,7 @@ const Equipe = () => {
   const [nouvelleEquipe, setNouvelleEquipe] = useState({
     nom: "",
     description: "",
+    cor: "#6366f1",
   });
 
   useEffect(() => {
@@ -42,13 +43,11 @@ const Equipe = () => {
     if (!nouvelleEquipe.nom) return;
     const docRef = await addDoc(collection(db, "equipes"), nouvelleEquipe);
     setEquipes([...equipes, { id: docRef.id, ...nouvelleEquipe }]);
-    setNouvelleEquipe({ nom: "", description: "" });
+    setNouvelleEquipe({ nom: "", description: "", cor: "#6366f1" });
     setShowModal(false);
   };
 
-  const handleSupprimer = (index) => {
-    setConfirmerSuppression(index);
-  };
+  const handleSupprimer = (index) => setConfirmerSuppression(index);
 
   const handleConfirmerSuppression = async () => {
     const equipe = equipes[confirmerSuppression];
@@ -92,9 +91,13 @@ const Equipe = () => {
         {equipesFiltrees.map((equipe, index) => {
           const projetsEquipe = getProjetsDEquipe(equipe.nom);
           return (
-            <div key={index} className="equipe-card">
+            <div
+              key={index}
+              className="equipe-card"
+              style={{ borderTop: `2px solid ${equipe.cor || "#6366f1"}` }}
+            >
               <div>
-                <h2>{equipe.nom}</h2>
+                <h2 style={{ color: equipe.cor || "#6366f1" }}>{equipe.nom}</h2>
                 <p>{equipe.description}</p>
                 {projetsEquipe.length > 0 ? (
                   <div>
@@ -168,6 +171,19 @@ const Equipe = () => {
                   })
                 }
               />
+              <label className="label-cor">
+                Couleur de l'équipe
+                <input
+                  type="color"
+                  value={nouvelleEquipe.cor}
+                  onChange={(e) =>
+                    setNouvelleEquipe({
+                      ...nouvelleEquipe,
+                      cor: e.target.value,
+                    })
+                  }
+                />
+              </label>
               <div className="modal-buttons">
                 <button className="btn-cree" onClick={handleAjouterEquipe}>
                   Créer

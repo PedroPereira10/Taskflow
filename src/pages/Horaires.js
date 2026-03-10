@@ -19,10 +19,13 @@ const JOURS = [
   "Samedi",
   "Dimanche",
 ];
+const JOURS_SEMAINE = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
 const Horaires = () => {
   const [horaires, setHoraires] = useState([]);
+  const [employes, setEmployes] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [semaineComplete, setSemaineComplete] = useState(false);
   const [confirmerSuppression, setConfirmerSuppression] = useState(null);
   const [nouvelHoraire, setNouvelHoraire] = useState({
     employe: "",
@@ -30,7 +33,6 @@ const Horaires = () => {
     heureDebut: "",
     heureFin: "",
   });
-  const [employes, setEmployes] = useState([]);
 
   useEffect(() => {
     const fetchHoraires = async () => {
@@ -45,8 +47,8 @@ const Horaires = () => {
       setEmployes(data);
     };
 
-    fetchEmployes();
     fetchHoraires();
+    fetchEmployes();
   }, []);
 
   const handleAjouter = async () => {
@@ -56,14 +58,27 @@ const Horaires = () => {
       !nouvelHoraire.heureFin
     )
       return;
-    const docRef = await addDoc(collection(db, "horaires"), nouvelHoraire);
-    setHoraires([...horaires, { id: docRef.id, ...nouvelHoraire }]);
+
+    if (semaineComplete) {
+      const nouveauxHoraires = [];
+      for (const jour of JOURS_SEMAINE) {
+        const horaire = { ...nouvelHoraire, jour };
+        const docRef = await addDoc(collection(db, "horaires"), horaire);
+        nouveauxHoraires.push({ id: docRef.id, ...horaire });
+      }
+      setHoraires([...horaires, ...nouveauxHoraires]);
+    } else {
+      const docRef = await addDoc(collection(db, "horaires"), nouvelHoraire);
+      setHoraires([...horaires, { id: docRef.id, ...nouvelHoraire }]);
+    }
+
     setNouvelHoraire({
       employe: "",
       jour: "Lundi",
       heureDebut: "",
       heureFin: "",
     });
+    setSemaineComplete(false);
     setShowModal(false);
   };
 
@@ -162,6 +177,7 @@ const Horaires = () => {
           <div className="modal-overlay" onClick={() => setShowModal(false)}>
             <div className="modal" onClick={(e) => e.stopPropagation()}>
               <h2>Ajouter un horaire</h2>
+
               <select
                 value={nouvelHoraire.employe}
                 onChange={(e) =>
@@ -178,18 +194,32 @@ const Horaires = () => {
                   </option>
                 ))}
               </select>
-              <select
-                value={nouvelHoraire.jour}
-                onChange={(e) =>
-                  setNouvelHoraire({ ...nouvelHoraire, jour: e.target.value })
-                }
-              >
-                {JOURS.map((jour) => (
-                  <option key={jour} value={jour}>
-                    {jour}
-                  </option>
-                ))}
-              </select>
+
+              {/* toggle semaine complète */}
+              <label className="toggle-semaine">
+                <input
+                  type="checkbox"
+                  checked={semaineComplete}
+                  onChange={(e) => setSemaineComplete(e.target.checked)}
+                />
+                Remplir toute la semaine (Lun - Ven)
+              </label>
+
+              {!semaineComplete && (
+                <select
+                  value={nouvelHoraire.jour}
+                  onChange={(e) =>
+                    setNouvelHoraire({ ...nouvelHoraire, jour: e.target.value })
+                  }
+                >
+                  {JOURS.map((jour) => (
+                    <option key={jour} value={jour}>
+                      {jour}
+                    </option>
+                  ))}
+                </select>
+              )}
+
               <div className="horaire-inputs">
                 <input
                   type="time"
@@ -213,6 +243,7 @@ const Horaires = () => {
                   }
                 />
               </div>
+
               <div className="modal-buttons">
                 <button className="btn-cree" onClick={handleAjouter}>
                   Ajouter

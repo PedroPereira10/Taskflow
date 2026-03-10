@@ -57,6 +57,22 @@
   font-weight: bold;
 }
 
+.toggle-semaine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #4b4b4b;
+    cursor: pointer;
+  }
+}
+
 .horaire-item {
   display: flex;
   justify-content: space-between;

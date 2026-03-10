@@ -75,6 +75,11 @@ const Accueil = () => {
     horaires: horaires.filter((h) => h.jour === jour),
   }));
 
+  const getColleurEquipe = (nomEquipe) => {
+    const equipe = equipes.find((e) => e.nom === nomEquipe);
+    return equipe?.cor || "#6366f1";
+  };
+
   return (
     <div className="page-layout">
       <Drawer />
@@ -88,7 +93,13 @@ const Accueil = () => {
           <div className="dashboard-section">
             <h2>Projets</h2>
             {projetsFiltrees.map((projet, index) => (
-              <div key={index} className="projet-card-dashboard">
+              <div
+                key={index}
+                className="projet-card-dashboard"
+                style={{
+                  borderTop: `2px solid ${getColleurEquipe(projet.equipe)}`,
+                }}
+              >
                 <h3>{projet.nom}</h3>
                 <p>{projet.description}</p>
               </div>
@@ -99,7 +110,11 @@ const Accueil = () => {
             <h2>Équipes</h2>
             {equipesFiltrees.map((equipe, index) => {
               return (
-                <div key={index} className="equipe-card-dashboard">
+                <div
+                  key={index}
+                  className="equipe-card-dashboard"
+                  style={{ borderTop: `2px solid ${equipe.cor || "#6366f1"}` }}
+                >
                   <h3>{equipe.nom}</h3>
                   <p>{equipe.description}</p>
                 </div>
