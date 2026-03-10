@@ -8,6 +8,7 @@ import Equipe from "./pages/Equipe";
 import Projects from "./pages/Projects";
 import ressourcehumaine from "./pages/Ressourcehumaine";
 import Annonces from "./pages/Annonces";
+import Employes from "./pages/Employes";
 
 function App() {
   const [viewMode, setViewMode] = useState("grid");
@@ -27,6 +28,7 @@ function App() {
         <Route path="/projets" component={Projects} />
         <Route path="/ressourcehumaine" component={ressourcehumaine} />
         <Route path="/annonces" component={Annonces} />
+        <Route path="/employes" component={Employes} />
       </Switch>
     </Router>
   );

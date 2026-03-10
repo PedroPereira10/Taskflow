@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import {
   Calendar,
   Users,
+  User,
   LayoutDashboard,
   Book,
   FolderKanban,
@@ -49,6 +50,14 @@ const Drawer = () => {
         className="nav-link"
       >
         <Users size={20}></Users>Équipes
+      </NavLink>
+      <NavLink
+        exact
+        to="/employes"
+        activeClassName="navActive"
+        className="nav-link"
+      >
+        <User size={20}></User>Employes
       </NavLink>
       <p>Projets</p>
       <NavLink

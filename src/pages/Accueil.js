@@ -133,29 +133,6 @@ const Accueil = () => {
               </div>
             ))}
           </div>
-
-          <div className="dashboard-section">
-            <h2>Horaires</h2>
-            {horaireParJour.map(
-              ({ jour, horaires }) =>
-                horaires.length > 0 && (
-                  <div key={jour} className="jour-card">
-                    <div className="jour-header">
-                      <h3>{jour}</h3>
-                      <span className="jour-count">{horaires.length}</span>
-                    </div>
-                    {horaires.map((h, index) => (
-                      <div key={index} className="horaire-item">
-                        <p className="employe-nom">{h.employe}</p>
-                        <p>
-                          {h.heureDebut} - {h.heureFin}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                ),
-            )}
-          </div>
         </div>
       </div>
     </div>

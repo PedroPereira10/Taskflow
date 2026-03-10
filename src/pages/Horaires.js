@@ -109,7 +109,6 @@ const Horaires = () => {
             + Ajouter un horaire
           </button>
         </div>
-        <p>{horaires.length} horaires enregistrés</p>
 
         <div className="horaires-grid">
           {horaireParJour.map(({ jour, horaires }) => (
