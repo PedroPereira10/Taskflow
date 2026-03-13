@@ -1,31 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Drawer from "../components/Drawer";
 import { db } from "../firebaseConfig";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
-import { Clock } from "lucide-react";
-
-const JOURS = [
-  "Lundi",
-  "Mardi",
-  "Mercredi",
-  "Jeudi",
-  "Vendredi",
-  "Samedi",
-  "Dimanche",
-];
+import { collection, getDocs } from "firebase/firestore";
 
 const Accueil = () => {
   const [equipes, setEquipes] = useState([]);
   const [projets, setProjets] = useState([]);
   const [formations, setFormations] = useState([]);
-  const [horaires, setHoraires] = useState([]);
-  const [recherche, setRecherche] = useState("");
+  const [setHoraires] = useState([]);
+  const [recherche] = useState("");
 
   useEffect(() => {
     const fetchProjets = async () => {
@@ -69,11 +52,6 @@ const Accueil = () => {
   const formationsFiltrees = formations.filter((formation) =>
     formation.nom.toLowerCase().includes(recherche.toLowerCase()),
   );
-
-  const horaireParJour = JOURS.map((jour) => ({
-    jour,
-    horaires: horaires.filter((h) => h.jour === jour),
-  }));
 
   const getColleurEquipe = (nomEquipe) => {
     const equipe = equipes.find((e) => e.nom === nomEquipe);
